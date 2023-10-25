@@ -27,6 +27,14 @@ class EditSearchEngine:
     def evaluate(self, query: str, options: dict) -> Iterator[Dict[str, Any]]:
         """
         Locates all strings in the trie that are no more than K edit errors away from the query string.
+
+        The matching strings, if any, are scored and only the highest-scoring matches are yielded
+        back to the client as dictionaries having the keys "score" (float), "distamce" (int) and
+        "match" (str).
+
+        The client can supply a dictionary of options that controls the query evaluation process:
+        Supported dictionary keys include "upper_bound" (int), "candidate_count" (int),
+        "hit_count" (int), "first_n" (int), and "scoring" (str).
         """
         # The upper bound for the edit distance we accept between the query and a match. Assumed to be
         # a small number, e.g., 1, 2, or 3. The lower we set the upper bound, the more we can prune
@@ -39,18 +47,15 @@ class EditSearchEngine:
         # The maximum number of scored matches we will emit.
         hit_count = max(1, min(100, options.get("hit_count", 10)))
 
-        # The maximum number of scored matches we will emit.
-        hit_count = max(1, min(100, options.get("hit_count", 10)))
-
         # Assume that the N first characters are correct? This significantly prunes down the search
         # space and can give a performance boost. However, we get worse recall if the assumption is
         # incorrect.
         first_n = max(0, min(len(query), options.get("first_n", 0)))
 
         # Make some modifications to our starting point, if needed.
-        prefix = "" if first_n == 0 else query[:first_n]
-        remainder = query if first_n == 0 else query[first_n:]
-        root = self.__trie if first_n == 0 else self.__trie.consume(prefix)
+        head = query[:first_n]
+        tail = query[first_n:]
+        root = self.__trie if first_n == 0 else self.__trie.consume(head)
 
         # The available scoring functions that the client can choose from. High
         # scores are better than low scores. The "lopresti" function is lifted
@@ -63,6 +68,7 @@ class EditSearchEngine:
 
         # The selected scoring function to apply to candidate matches.
         scoring = options.get("scoring", "normalized")
+        assert scoring in scorers
 
         # For keeping track of scored candidate matches. Only retains the highest-scoring ones.
         sieve = Sieve(hit_count)
@@ -70,12 +76,12 @@ class EditSearchEngine:
         # The edit table object that we update as we traverse the trie. Two strings that share
         # a prefix of length N also share the N first columns in the edit table. Hence, as we
         # traverse the trie we can avoid recomputing large parts of the table.
-        table = EditTable(remainder, "?" * 10, False)
+        table = EditTable(tail, "?" * 10, False)
 
         # Receives matches from the search, as they are found. The search aborts if the callback
         # returns False, i.e., when we have received sufficiently many candidate matches.
         def callback(distance: int, match: str) -> bool:
-            score = scorers[scoring](distance, remainder, match)
+            score = scorers[scoring](distance, tail, match)
             sieve.sift(score, (distance, match))
             nonlocal candidate_count
             candidate_count -= 1
@@ -87,7 +93,7 @@ class EditSearchEngine:
 
         # Emit the best matches!
         for (score, (distance, match)) in sieve.winners():
-            yield {"score": score, "distance": distance, "match": prefix + match}
+            yield {"score": score, "distance": distance, "match": head + match}
 
     def __dfs(self, node: Trie, level: int, table: EditTable,
               upper_bound: int, callback: Callable[[float, str], bool]) -> bool:
@@ -120,7 +126,7 @@ class EditSearchEngine:
                 if not callback(distance, table.prefix(level)):
                     return False
                 
-        # The node may have children. Explore or prune the branch. Only explore if we have
+        # The node may have children. Explore or prune the branches. Only explore if we have
         # not exceeded our upper bound. The lower our upper bound, the more of the search
         # space we can prune away.
         for transition in node.transitions():
@@ -131,4 +137,3 @@ class EditSearchEngine:
 
         # Continue the search.
         return True
-

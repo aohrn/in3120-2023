@@ -5,7 +5,7 @@ class EditTable:
     """
     A simple representation of an edit table with unit edit costs, using Damerau-Levenshtein
     distance. See https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance. See
-    also https://www.cs.helsinki.fi/u/tpkarkka/teach/16-17/SPA/lecture06.pdf additional
+    also https://www.cs.helsinki.fi/u/tpkarkka/teach/16-17/SPA/lecture06.pdf for additional
     details.
 
     The edit table is equipped with an interface so that it is easy to use together with the
@@ -71,7 +71,7 @@ class EditTable:
         """
         Appends a few extra columns to the table. Appending columns implies (a) appending symbols
         to the candidate string, (b) appending cells to the special first padding row, and (c)
-        appending cell to all the other rows.
+        appending cells to all the other rows.
         """
         current = len(self._candidate)
         self._candidate.extend("?" for _ in range(extra))

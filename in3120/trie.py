@@ -9,14 +9,22 @@ from .tokenizer import Tokenizer
 class Trie:
     """
     A very simple and straightforward implementation of a trie for demonstration purposes
-    and tiny dictionaries.
+    and tiny dictionaries. A node in the trie is also itself a trie in this implementation.
 
     A serious real-world implementation of a trie or an automaton would not be implemented
     this way. The trie/automaton would then instead be encoded into a single contiguous buffer
     and there'd be significant attention on memory consumption and scalability with respect to
     dictionary size.
 
-    A node in the trie is also a trie itself in this implementation.
+    Using, e.g., Marisa (https://github.com/pytries/marisa-trie), or DAWG (https://dawg.readthedocs.io/en/latest/),
+    or datrie (https://pypi.org/project/datrie/), or hat-trie (https://github.com/pytries/hat-trie)
+    would have plausible open source alternatives.
+
+    The current implementation does not support associating a value of some kind (say, an integer)
+    with each string added to the trie. Support for this can be trivially added, though, if needed.
+    Some applications might benefit from this, if we need to keep rich metadata associated with each
+    string. In such cases, these associated values can be used as lookup keys into, e.g., some
+    external database.
     """
 
     def __init__(self):

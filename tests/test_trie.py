@@ -19,6 +19,7 @@ class TestTrie(unittest.TestCase):
         node = root["ab"]
         self.assertTrue(not node.is_final())
         node = node.consume("b")
+        node = node.consume("")
         self.assertTrue(node.is_final())
         self.assertEqual(node, root.consume("abb"))
 
@@ -52,6 +53,10 @@ class TestTrie(unittest.TestCase):
         root = self.__root
         self.assertIsNotNone(root.child("a"))
         self.assertIsNone(root.child("ab"))
+        child = root.child("a")
+        child = child.child("b")
+        child = child.child("b")
+        self.assertIsNone(child.child(""))
 
 
 if __name__ == '__main__':

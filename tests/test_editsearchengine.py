@@ -34,6 +34,11 @@ class TestEditSearchEngine(unittest.TestCase):
             scores = [r["score"] for r in results]
             self.assertListEqual(scores, sorted(scores, reverse=True))
 
+    def test_invalid_scoring_function(self):
+        options = {"scoring": "fgdkjhdfhkjg"}
+        with self.assertRaises(AssertionError):
+            list(self._engine.evaluate("aleksander", options))
+
     def test_upper_bound(self):
         expected = [(1, 2), (2, 3), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 6), (9, 7)]
         for (k, hits) in expected:
