@@ -65,9 +65,6 @@ class Chatbot:
         if type(query) == str:
             query = self._tokenise(query)
 
-        # Your implementation should use the get_tf_idf and compute_cosine
-        # methods that are already provided (as well as the TF-IDF values
-        # from each utterance in the corpus, stored in self.tf_idfs)
         raise NotImplementedError()
 
     def compute_cosine(self, tf_idf1, tf_idf2):
