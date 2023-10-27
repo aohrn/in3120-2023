@@ -22,8 +22,6 @@
 # limitations under the License.
 # ==============================================================================
 
-import nltk
-
 
 class Chatbot:
     """Retrieval-based chatbot using TF-IDF vectors"""
@@ -45,19 +43,11 @@ class Chatbot:
 
     def _tokenise(self, utterance):
         """Convert an utterance to lowercase and tokenise it by using the toknization of your choice"""
-        return nltk.word_tokenize(utterance.lower())
+        raise NotImplementedError()
 
     def _compute_doc_frequencies(self):
         """Compute the document frequencies (necessary for IDF)"""
-        doc_freqs = {}
-        for utterance in self.utterances:
-            tokens = self._tokenise(utterance)
-            for token in tokens:
-                if token not in doc_freqs:
-                    doc_freqs[token] = 1
-                else:
-                    doc_freqs[token] += 1
-        return doc_freqs
+        raise NotImplementedError()
 
     def get_tf_idf(self, utterance):
         """Compute the TF-IDF vector of an utterance. The vector can be represented
