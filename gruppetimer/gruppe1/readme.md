@@ -22,3 +22,4 @@ Dersom du har ønsker, innspill eller feedback har jeg et anonymt Nettskjema som
 1. [Rocchio, query expansion, classification + oblighjelp for C](./uke6_rocchioClassification)
 1. [Gjestetime: oblighjelp for C](./uke7_sergey)
 1. [Obliger og DSI-paper: Gjennomgå obliger og snakke om DSI-paper](./uke8_obliger)
+1. [TF-IDF og cosine similarity: Chatbot workshop](./uke9_tfidf-chatbot_workshop)
