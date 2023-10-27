@@ -77,3 +77,20 @@ class Chatbot:
     def _get_norm(self, tf_idf):
         """Compute the vector norm"""
         raise NotImplementedError()
+
+
+if __name__ == "__main__":
+    TEST_SENTS = [
+        "hello world",
+        "hello",
+        "world",
+        "hello world",
+        "Who are you?",
+        "I am a chatbot",
+        "What is the meaning of stonehenge?",
+    ]
+    cb = Chatbot("lotr.en")
+    cb.get_response("hello.")
+
+    for sent in TEST_SENTS:
+        print(f"{sent}: {cb.get_response(sent)}")
