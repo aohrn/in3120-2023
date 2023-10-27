@@ -1,4 +1,3 @@
-####
 # This code was originally provided as precode for IN2110 V21.
 # It has been modified for IN3120 H23 to increase difficulty and redistributed
 # under the concept of "det er lettere å be om tilvgivelse enn tillatelse".
@@ -22,6 +21,10 @@
 # limitations under the License.
 # ==============================================================================
 
+from collections import Counter
+import math
+import nltk
+
 
 class Chatbot:
     """Retrieval-based chatbot using TF-IDF vectors"""
@@ -43,16 +46,44 @@ class Chatbot:
 
     def _tokenise(self, utterance):
         """Convert an utterance to lowercase and tokenise it by using the toknization of your choice"""
-        raise NotImplementedError()
+        return utterance.lower().split()
+        return nltk.word_tokenize(utterance.lower())
 
     def _compute_doc_frequencies(self):
         """Compute the document frequencies (necessary for IDF)"""
-        raise NotImplementedError()
+        doc_freqs = {}
+        for utterance in self.utterances:
+            for token in utterance:
+                doc_freqs[token] = doc_freqs.get(token, 0) + 1
+        return doc_freqs
 
     def get_tf_idf(self, utterance):
         """Compute the TF-IDF vector of an utterance. The vector can be represented
         as a dictionary mapping words to TF-IDF scores."""
-        raise NotImplementedError()
+        tf_idf_dict = {}
+        term_counts = Counter(utterance)
+        for term, freq in term_counts.items():
+            idf = math.log(len(self.utterances) / (self.doc_freqs.get(term, 0) + 1))
+            tf_idf_dict[term] = freq * idf
+
+        return tf_idf_dict
+
+    def _get_norm(self, tf_idf):
+        """Computes the norm of a vector"""
+        norm = 0
+        for word in tf_idf:
+            norm += tf_idf[word] ** 2
+        return norm**0.5
+
+    def compute_cosine(self, tf_idf1, tf_idf2):
+        """Computes the cosine similarity between two vectors"""
+        dot_product = 0
+        for word in tf_idf1:
+            if word in tf_idf2:
+                dot_product += tf_idf1[word] * tf_idf2[word]
+        norm1 = self._get_norm(tf_idf1)
+        norm2 = self._get_norm(tf_idf2)
+        return dot_product / (norm1 * norm2)
 
     def get_response(self, query):
         """
@@ -62,35 +93,38 @@ class Chatbot:
         """
 
         # If the query is a string, we first tokenise it
-        if type(query) == str:
-            query = self._tokenise(query)
+        query_tokens = type(query) == str and self._tokenise(query) or query
 
-        # Your implementation should use the get_tf_idf and compute_cosine
-        # methods that are already provided (as well as the TF-IDF values
-        # from each utterance in the corpus, stored in self.tf_idfs)
-        raise NotImplementedError()
+        # Vectorize the query
+        query_vector = self.get_tf_idf(query_tokens)
 
-    def compute_cosine(self, tf_idf1, tf_idf2):
-        """Computes the cosine similarity between two vectors"""
-        raise NotImplementedError()
+        # Init variables for storing max cosine and index of best match
+        max_cosine, max_idx = 0, 0
 
-    def _get_norm(self, tf_idf):
-        """Compute the vector norm"""
-        raise NotImplementedError()
+        # Evaluate all other documents as potential matches
+        for i, tf_idf in enumerate(self.tf_idfs):
+            # calculate candidate cosine similarity
+            cos = self.compute_cosine(query_vector, tf_idf)
+            # If this is the best match so far, update the variables
+            if cos > max_cosine:
+                max_cosine = cos
+                max_idx = i
+        # Return the utterance following the best match
+        # TODO: Implement better output formatting in regard to punctuation
+        return " ".join(self.utterances[max_idx + 1])
 
 
 if __name__ == "__main__":
     TEST_SENTS = [
-        "hello world",
-        "hello",
-        "world",
         "hello world",
         "Who are you?",
         "I am a chatbot",
         "What is the meaning of stonehenge?",
     ]
     cb = Chatbot("lotr.en")
-    cb.get_response("hello.")
 
     for sent in TEST_SENTS:
-        print(f"{sent}: {cb.get_response(sent)}")
+        print("--------")
+        print(sent)
+        print(cb.get_response(sent))
+        print("--------")
