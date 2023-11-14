@@ -24,3 +24,4 @@ Dersom du har ønsker, innspill eller feedback har jeg et anonymt Nettskjema som
 1. [Obliger og DSI-paper: Gjennomgå obliger og snakke om DSI-paper](./uke8_obliger)
 1. [TF-IDF og cosine similarity: Chatbot workshop](./uke9_tfidf-chatbot_workshop)
 1. [Web search, PageRank, Bloom filters, Cuckoo filters: Also some machine learning.](./uke10_web_structures)
+1. [Assignment workshop: Moved to thursday.](./uke11_workshop)
