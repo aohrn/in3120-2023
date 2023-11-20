@@ -15,4 +15,7 @@ Uke 4 - [Index compression](https://github.com/aohrn/in3120-2023/blob/main/grupp
 Uke 5 - [Ranked retrieval](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2005/README.md) \
 Uke 6 - [Effektiv scoring](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2006/README.md) \
 Uke 7 - [Evaluering av søkemotorer](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2007/README.md) \
-Uke 8 - [Query improvement](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2007/README.md)
+Uke 8 - [Query improvement](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2008/README.md) \
+Uke 9 - [Grunnleggende eksamenstips](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2009) \
+Uke 10 - [Intro til Naive Bayes](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2010) \
+Uke 12 - [Resten av PDFen til Truls](https://github.com/aohrn/in3120-2023/blob/main/gruppetimer/Gruppe%202/Uke%2012)
