@@ -1,6 +1,6 @@
 # Mock exam
 
-## Time
+## Time and place
 
 2023-11-22 10:15 @ Prolog
 
