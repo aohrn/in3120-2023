@@ -12,4 +12,4 @@ Questions and solution sketches will be published after the last class.
 
 ## Disclaimer
 
-Remember that both the questions and their proposed solutions are written by the teaching assistents and should be trated accordingly.
+Remember that both the questions and their proposed solutions are written by the teaching assistants and should be trated accordingly.
