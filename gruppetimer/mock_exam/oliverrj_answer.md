@@ -8,9 +8,7 @@ This is my live solution written during the mock exam.
 
 ### Q1: The _Kendall tau coefficient_ is a measure of the correspondence between two rankings. A value of 0 indicates perfect disagreement between the rankings.
 
-The 'Kendall-tau coefficient', most often referred to as Kendall Tau distance is a measure of the equality of the order of to lists. In the context of our course we typically use this as a metric for comparison of various ranking methods, i.e. measure how similar/different various ranking approaches are. The value provided by calculating Kendall tau distance is the same as the number of swaps in a bubble sort-algorithm for sorting one of the lists to equal the other. Because of this, the value 0 indicates that the lists are identical and the statement is therefore false.
-
-**This answer is wrong - kendall tau distance and kendall tau coefficient are not the same thing. The answer is true for kendall tau distance (which is also a part of the curriculum)**
+_Removed my answer due do it being wrong._
 
 ### Q2: As _Support Vector Machines_ are inherently binary classifiers, they are not useful for multi-classification.
 
