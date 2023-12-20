@@ -25,3 +25,5 @@ Dersom du har ønsker, innspill eller feedback har jeg et anonymt Nettskjema som
 1. [TF-IDF og cosine similarity: Chatbot workshop](./uke9_tfidf-chatbot_workshop)
 1. [Web search, PageRank, Bloom filters, Cuckoo filters: Also some machine learning.](./uke10_web_structures)
 1. [Assignment workshop: Moved to thursday.](./uke11_workshop)
+1. [Avlyst: Cancelled because Paris.](./uke12_void)
+1. [Avlyst: Cancelled because Strasbourg.](./uke13_void)
